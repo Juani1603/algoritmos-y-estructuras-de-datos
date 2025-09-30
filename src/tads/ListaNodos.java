@@ -3,6 +3,7 @@ package tads;
 public class ListaNodos<T> implements ILista<T> {
 
     private Nodo inicio;
+    private Nodo fin;
     private int cantElementos;
 
     public ListaNodos() {
@@ -100,43 +101,59 @@ public class ListaNodos<T> implements ILista<T> {
         return cantElementos;
     }
 
-    public boolean existe(T n) {
+    @Override
+    public boolean existeElemento(T o) {
+        Nodo aux = inicio;
         boolean existe = false;
-        if (!esVacia()) {
-            Nodo aux = inicio;
-
-            while (aux != null) {
-                existe = n.equals(aux.getDato());
-                aux = aux.getSiguiente();
+        
+        while (aux != null && !existe){
+            if (aux.getDato().equals(o)){
+                
             }
         }
+        
         return existe;
     }
     
-    public T buscarElemento(String clave){
+    public T obtenerPorObj(T o){
+        T objeto = null;
         if (!esVacia()){
-            Nodo<T> aux = inicio;
+            Nodo aux = inicio;
             
-            while (aux != null){
-                if (clave.equals(aux.getDato())){
-                    return aux.getDato();
+            while(aux != null){
+                if (aux.getDato().equals(o)){
+                    objeto = aux.getDato();
                 }
-                aux = aux.getSiguiente();
             }
-        }   
-        return null;
+        }
+        return objeto;
     }
     
+    @Override
+    public T Obtener(int pos) {
+        T objeto = null;
+        if (!esVacia()) {
+            Nodo<T> aux = inicio;
+            for (int i = 0; i < pos; i++) {
+                aux = aux.getSiguiente();
+            }
+            objeto = aux.getDato();
+        }
+        return objeto;
+    }
+    
+    @Override
     public void eliminar(T n) {
         if (!esVacia()) {
             Nodo aux = inicio;
 
             while (aux != null) {
-                if (aux.getSiguiente() == n && aux.getSiguiente() != null){
+                if (aux.getSiguiente() == n && aux.getSiguiente() != null) {
                     aux.setSiguiente(aux.getSiguiente().getSiguiente());
                 }
                 aux = aux.getSiguiente();
             }
         }
     }
+
 }

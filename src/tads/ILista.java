@@ -10,4 +10,7 @@ public interface ILista<T> {
     public void vaciar();
     public void mostrar();
     public int cantElementos();
+    public boolean existe(T n);
+    public T Obtener(int pos);
+    public void eliminar(T n);
 }

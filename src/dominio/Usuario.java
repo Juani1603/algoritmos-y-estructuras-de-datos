@@ -9,6 +9,10 @@ public class Usuario {
         this.cedula = cedula;
         this.nombre = nombre;
     }
+    
+    public Usuario(String cedula){
+        this.cedula = cedula;
+    }
 
     public String getCedula() {
         return cedula;
@@ -37,7 +41,12 @@ public class Usuario {
         }
 
         Usuario usuario = (Usuario) o;
-        return this.cedula == usuario.cedula && cedula.equals(usuario.cedula); 
+        return this.cedula == usuario.cedula && cedula.equals(usuario.cedula);
+    }
+
+    @Override
+    public String toString() {
+        return this.getNombre() + "#" + this.getCedula();
     }
 
 }

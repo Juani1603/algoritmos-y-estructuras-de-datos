@@ -2,7 +2,7 @@ package tads;
 
 public class Nodo<T> {
     private T dato;
-    private Nodo<T> siguiente;
+    private Nodo siguiente;
 
     public Nodo(T dato) {
         this.dato = dato;
@@ -13,7 +13,7 @@ public class Nodo<T> {
         return dato;
     }
 
-    public Nodo<T> getSiguiente() {
+    public Nodo getSiguiente() {
         return siguiente;
     }
 
