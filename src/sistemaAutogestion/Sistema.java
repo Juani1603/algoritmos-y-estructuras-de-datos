@@ -60,19 +60,19 @@ public class Sistema implements IObligatorio {
 
         if (nombre == null || nombre.isBlank()) {
             return Retorno.error1();
-        }   
+        }
 
         if (cedula.length() != 8) {
             return Retorno.error2();
         }
 
         Usuario usuarioBuscado = new Usuario(cedula);
-        if (usuarios.existeElemento(usuarioBuscado)){
+        if (usuarios.existeElemento(usuarioBuscado)) {
             return Retorno.error3();
         }
 
         Usuario usuarioNuevo = new Usuario(cedula, nombre);
-        usuarios.agregarFinal(usuarioNuevo);
+        usuarios.agregarOrdenado(usuarioNuevo);
         return Retorno.ok();
     }
 
@@ -96,7 +96,7 @@ public class Sistema implements IObligatorio {
         }
 
         Bicicleta bicicletaBuscada = new Bicicleta(codigo);
-        if (bicicletas.existeElemento(bicicletaBuscada)){
+        if (bicicletas.existeElemento(bicicletaBuscada)) {
             return Retorno.error4();
         }
 
@@ -108,11 +108,11 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-        if (codigo == null || codigo.isBlank() ) {
+        if (codigo == null || codigo.isBlank()) {
             return Retorno.error1();
         }
 
-        if (motivo == null|| motivo.isBlank()) {
+        if (motivo == null || motivo.isBlank()) {
             return Retorno.error1();
         }
 
@@ -198,7 +198,7 @@ public class Sistema implements IObligatorio {
         if (usuarioBuscado == null) {
             return Retorno.error3();
         }
-        
+
         String mensaje = usuarioBuscado.getNombre() + "#" + usuarioBuscado.getCedula();
 
         Retorno retorno = new Retorno(Retorno.Resultado.OK, mensaje);
@@ -207,12 +207,37 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarUsuarios() {
-        return Retorno.noImplementada();
+        String mensaje = "";
+
+        for (int i = 0; i < usuarios.cantElementos(); i++) {
+            Usuario u = usuarios.obtenerPorPos(i);
+            mensaje += usuarios.obtenerPorObj(u);
+            if (i != usuarios.cantElementos() - 1) {
+                mensaje += "|";
+            }
+
+        }
+
+        Retorno retorno = new Retorno(Retorno.Resultado.OK, mensaje);
+        return retorno;
     }
 
     @Override
     public Retorno listarBicisEnDeposito() {
-        return Retorno.noImplementada();
+        String mensaje = "";
+
+        for (int i = 0; i < bicicletas.cantElementos(); i++) {
+            Bicicleta b = bicicletas.obtenerPorPos(i);
+            if (b.getEstado() != Bicicleta.Estado.ALQUILADA) {
+                mensaje += b.getCodigo() + "#" + b.getTipo() + "#" + b.getEstado();
+                if (i != bicicletas.cantElementos() - 1) {
+                    mensaje += "|";
+                }
+            }
+        }
+
+        Retorno retorno = new Retorno(Retorno.Resultado.OK, mensaje);
+        return retorno;
     }
 
     @Override

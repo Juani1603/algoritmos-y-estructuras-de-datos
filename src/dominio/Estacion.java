@@ -2,7 +2,7 @@ package dominio;
 
 import tads.*;
 
-public class Estacion {
+public class Estacion implements Comparable<Estacion>{
 
     private String nombre;
     private String barrio;
@@ -55,5 +55,10 @@ public class Estacion {
     @Override
     public boolean equals(Object o) {
         return this.getNombre().equalsIgnoreCase(((Estacion)o).getNombre());
+    }
+
+    @Override
+    public int compareTo(Estacion o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -21,8 +21,13 @@ public class ListaNodos<T extends Comparable> implements ILista<T> {
 
         Nodo nuevo = new Nodo(n);
 
+        if (esVacia()) {
+            fin = nuevo;
+        }
+
         nuevo.setSiguiente(inicio);
         inicio = nuevo;
+
         cantElementos++;
 
     }
@@ -34,13 +39,8 @@ public class ListaNodos<T extends Comparable> implements ILista<T> {
             agregarInicio(n);
         } else {
             Nodo nuevo = new Nodo(n);
-            Nodo aux = inicio;
-
-            while (aux.getSiguiente() != null) {
-                aux = aux.getSiguiente();
-            }
-
-            aux.setSiguiente(nuevo);
+            fin.setSiguiente(nuevo);
+            fin = nuevo;
             cantElementos++;
 
         }
@@ -125,6 +125,7 @@ public class ListaNodos<T extends Comparable> implements ILista<T> {
                 if (aux.getDato().equals(o)) {
                     objeto = aux.getDato();
                 }
+                aux = aux.getSiguiente();
             }
         }
         return objeto;
@@ -154,23 +155,22 @@ public class ListaNodos<T extends Comparable> implements ILista<T> {
     @Override
     public void agregarOrdenado(T o) {
 
-        if (esVacia() || inicio.getDato().compareTo(o) >= 0) {
+        if (esVacia() || inicio.getDato().compareTo(o) >= 0) {  //esVacia o va al comienzo
             agregarInicio(o);
         } else {
-            if (fin.getDato().compareTo(o) <= 0) {
+            if (fin.getDato().compareTo(o) <= 0) {  //va al final
                 agregarFinal(o);
             } else {
-                Nodo aux = inicio;
-                Nodo nuevo = new Nodo(o);
 
-                while (aux != null && aux.getSiguiente().getDato().compareTo(o) < 0) {
+                Nodo aux = inicio;
+                while (aux.getSiguiente().getDato().compareTo(o) < 0) {
                     aux = aux.getSiguiente();
                 }
-
+                Nodo nuevo = new Nodo(o);
                 nuevo.setSiguiente(aux.getSiguiente());
                 aux.setSiguiente(nuevo);
-                cantElementos++;
 
+                cantElementos++;
             }
         }
 
