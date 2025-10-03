@@ -1,6 +1,6 @@
 package dominio;
 
-public class Usuario {
+public class Usuario implements Comparable<Usuario>{
 
     private String cedula;
     private String nombre;
@@ -32,21 +32,17 @@ public class Usuario {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
-
-        Usuario usuario = (Usuario) o;
-        return this.cedula == usuario.cedula && cedula.equals(usuario.cedula);
+        return this.getCedula().equalsIgnoreCase(((Usuario)o).getCedula());
     }
 
     @Override
     public String toString() {
         return this.getNombre() + "#" + this.getCedula();
+    }
+
+    @Override
+    public int compareTo(Usuario o) {
+         return this.getNombre().compareToIgnoreCase(o.getNombre());
     }
 
 }

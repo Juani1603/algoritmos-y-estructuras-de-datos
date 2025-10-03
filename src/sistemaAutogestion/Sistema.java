@@ -18,22 +18,22 @@ public class Sistema implements IObligatorio {
         estaciones = new ListaNodos<Estacion>();
         usuarios = new ListaNodos<Usuario>();
         tiposBicicleta = new ListaNodos<String>();
-        
+
         tiposBicicleta.agregarFinal("URBANA");
         tiposBicicleta.agregarFinal("MOUNTAIN");
         tiposBicicleta.agregarFinal("ELECTRICA");
-        
+
         return Retorno.ok();
     }
 
     @Override
     public Retorno registrarEstacion(String nombre, String barrio, int capacidad) {
 
-        if (nombre == null || barrio == null) {
+        if (nombre == null || nombre.isBlank()) {
             return Retorno.error1();
         }
 
-        if (nombre.isBlank() || barrio.isBlank()) {
+        if (barrio == null || barrio.isBlank()) {
             return Retorno.error1();
         }
 
@@ -41,11 +41,10 @@ public class Sistema implements IObligatorio {
             return Retorno.error2();
         }
 
-        for (int i = 0; i < estaciones.cantElementos(); i++) {
-            Estacion e = estaciones.Obtener(i);
-            if (e.getNombre().equals(nombre)) {
-                return Retorno.error3();
-            }
+        Estacion estacionBuscada = new Estacion(nombre);
+
+        if (estaciones.existeElemento(estacionBuscada)) {
+            return Retorno.error3();
         }
 
         Estacion estacionNueva = new Estacion(nombre, barrio, capacidad);
@@ -55,23 +54,21 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno registrarUsuario(String cedula, String nombre) {
-        if (cedula == null || nombre == null) {
+        if (cedula == null || cedula.isBlank()) {
             return Retorno.error1();
         }
 
-        if (cedula.isBlank() || nombre.isBlank()) {
+        if (nombre == null || nombre.isBlank()) {
             return Retorno.error1();
-        }
+        }   
 
         if (cedula.length() != 8) {
             return Retorno.error2();
         }
 
-        for (int i = 0; i < usuarios.cantElementos(); i++) {
-            Usuario u = usuarios.Obtener(i);
-            if (u.getCedula().equals(cedula)) {
-                return Retorno.error3();
-            }
+        Usuario usuarioBuscado = new Usuario(cedula);
+        if (usuarios.existeElemento(usuarioBuscado)){
+            return Retorno.error3();
         }
 
         Usuario usuarioNuevo = new Usuario(cedula, nombre);
@@ -82,11 +79,11 @@ public class Sistema implements IObligatorio {
     @Override
     public Retorno registrarBicicleta(String codigo, String tipo) {
 
-        if (codigo == null || tipo == null) {
+        if (codigo == null || codigo.isBlank()) {
             return Retorno.error1();
         }
 
-        if (codigo.isBlank() || tipo.isBlank()) {
+        if (tipo == null || tipo.isBlank()) {
             return Retorno.error1();
         }
 
@@ -94,15 +91,13 @@ public class Sistema implements IObligatorio {
             return Retorno.error2();
         }
 
-        if (!tiposBicicleta.existe(tipo.toUpperCase())) {
+        if (!tiposBicicleta.existeElemento(tipo.toUpperCase())) {
             return Retorno.error3();
         }
 
-        for (int i = 0; i < bicicletas.cantElementos(); i++) {
-            Bicicleta b = bicicletas.Obtener(i);
-            if (b.getCodigo().equals(codigo)) {
-                return Retorno.error4();
-            }
+        Bicicleta bicicletaBuscada = new Bicicleta(codigo);
+        if (bicicletas.existeElemento(bicicletaBuscada)){
+            return Retorno.error4();
         }
 
         Bicicleta bicicletaNueva = new Bicicleta(codigo, tipo);
@@ -113,22 +108,16 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-        if (codigo == null || motivo == null) {
+        if (codigo == null || codigo.isBlank() ) {
             return Retorno.error1();
         }
 
-        if (codigo.isBlank() || motivo.isBlank()) {
+        if (motivo == null|| motivo.isBlank()) {
             return Retorno.error1();
         }
 
-        Bicicleta bicicletaBuscada = null;
-
-        for (int i = 0; i < bicicletas.cantElementos(); i++) {
-            Bicicleta b = bicicletas.Obtener(i);
-            if (b.getCodigo().equals(codigo)) {
-                bicicletaBuscada = b;
-            }
-        }
+        Bicicleta aux = new Bicicleta(codigo);
+        Bicicleta bicicletaBuscada = bicicletas.obtenerPorObj(aux);
 
         if (bicicletaBuscada == null) {
             return Retorno.error2();
@@ -148,22 +137,12 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno repararBicicleta(String codigo) {
-        if (codigo == null) {
+        if (codigo == null || codigo.isBlank()) {
             return Retorno.error1();
         }
 
-        if (codigo.isBlank()) {
-            return Retorno.error1();
-        }
-
-        Bicicleta bicicletaBuscada = null;
-        
-        for (int i = 0; i < bicicletas.cantElementos(); i++) {
-            Bicicleta b = bicicletas.Obtener(i);
-            if (b.getCodigo().equals(codigo)) {
-                bicicletaBuscada = b;
-            }
-        }
+        Bicicleta aux = new Bicicleta(codigo);
+        Bicicleta bicicletaBuscada = bicicletas.obtenerPorObj(aux);
 
         if (bicicletaBuscada == null) {
             return Retorno.error2();
@@ -204,33 +183,26 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno obtenerUsuario(String cedula) {
-        
-        if (cedula == null) {
+
+        if (cedula == null || cedula.isBlank()) {
             return Retorno.error1();
         }
 
-        if (cedula.isBlank()) {
-            return Retorno.error1();
-        }
-        
-        if (cedula.length() != 8){
+        if (cedula.length() != 8) {
             return Retorno.error2();
         }
-        
-        Usuario usuarioBuscado = null;
-        
-        for (int i = 0; i < usuarios.cantElementos(); i++) {
-            Usuario u = usuarios.Obtener(i);
-            if (u.getCedula().equals(cedula)) {
-                usuarioBuscado = u;
-            }
-        }
-        
-        if (usuarioBuscado == null){
+
+        Usuario aux = new Usuario(cedula);
+        Usuario usuarioBuscado = usuarios.obtenerPorObj(aux);
+
+        if (usuarioBuscado == null) {
             return Retorno.error3();
         }
         
-        return Retorno.ok(usuarioBuscado.toString());
+        String mensaje = usuarioBuscado.getNombre() + "#" + usuarioBuscado.getCedula();
+
+        Retorno retorno = new Retorno(Retorno.Resultado.OK, mensaje);
+        return retorno;
     }
 
     @Override

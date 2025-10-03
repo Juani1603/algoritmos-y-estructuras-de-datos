@@ -15,6 +15,10 @@ public class Bicicleta {
         this.estado = Estado.DISPONIBLE;
     }
 
+    public Bicicleta(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -41,16 +45,7 @@ public class Bicicleta {
     
      @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
-
-        Bicicleta bicicleta = (Bicicleta) o;
-        return this.codigo == bicicleta.codigo && codigo.equals(bicicleta.codigo); 
+        return this.getCodigo().equalsIgnoreCase(((Bicicleta)o).getCodigo());
     }
     
 }

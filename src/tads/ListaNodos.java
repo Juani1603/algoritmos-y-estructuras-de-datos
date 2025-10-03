@@ -1,6 +1,6 @@
 package tads;
 
-public class ListaNodos<T> implements ILista<T> {
+public class ListaNodos<T extends Comparable> implements ILista<T> {
 
     private Nodo inicio;
     private Nodo fin;
@@ -103,45 +103,79 @@ public class ListaNodos<T> implements ILista<T> {
 
     @Override
     public boolean existeElemento(T o) {
+
         Nodo aux = inicio;
         boolean existe = false;
-        
-        while (aux != null && !existe){
-            if (aux.getDato().equals(o)){
-                
+
+        while (aux != null && !existe) {
+            if (aux.getDato().equals(o)) {
+                existe = true;
             }
+            aux = aux.getSiguiente();
         }
-        
         return existe;
     }
-    
-    public T obtenerPorObj(T o){
+
+    public T obtenerPorObj(T o) {
         T objeto = null;
-        if (!esVacia()){
-            Nodo aux = inicio;
-            
-            while(aux != null){
-                if (aux.getDato().equals(o)){
+        if (!esVacia()) {
+            Nodo<T> aux = inicio;
+
+            while (aux != null) {
+                if (aux.getDato().equals(o)) {
                     objeto = aux.getDato();
                 }
             }
         }
         return objeto;
     }
-    
+
+    /*
+    pre: pos >=0 y < largo de lista
+     */
     @Override
-    public T Obtener(int pos) {
-        T objeto = null;
-        if (!esVacia()) {
+    public T obtenerPorPos(int pos) {
+
+        if (esVacia()) {
+            return null;
+        } else {
+            int posActual = 0;
             Nodo<T> aux = inicio;
-            for (int i = 0; i < pos; i++) {
+
+            while (aux != null && pos != posActual) {
                 aux = aux.getSiguiente();
+                posActual++;
             }
-            objeto = aux.getDato();
+            return aux.getDato();
         }
-        return objeto;
+
     }
-    
+
+    @Override
+    public void agregarOrdenado(T o) {
+
+        if (esVacia() || inicio.getDato().compareTo(o) >= 0) {
+            agregarInicio(o);
+        } else {
+            if (fin.getDato().compareTo(o) <= 0) {
+                agregarFinal(o);
+            } else {
+                Nodo aux = inicio;
+                Nodo nuevo = new Nodo(o);
+
+                while (aux != null && aux.getSiguiente().getDato().compareTo(o) < 0) {
+                    aux = aux.getSiguiente();
+                }
+
+                nuevo.setSiguiente(aux.getSiguiente());
+                aux.setSiguiente(nuevo);
+                cantElementos++;
+
+            }
+        }
+
+    }
+
     @Override
     public void eliminar(T n) {
         if (!esVacia()) {

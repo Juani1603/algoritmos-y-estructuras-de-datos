@@ -15,6 +15,11 @@ public class Estacion {
         this.capacidad = capacidad;
     }
 
+    public Estacion(String nombre) {
+        this.nombre = nombre;
+    }
+    
+
     public String getNombre() {
         return nombre;
     }
@@ -49,15 +54,6 @@ public class Estacion {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
-
-        Estacion estacion = (Estacion) o;
-        return this.nombre == estacion.nombre && nombre.equals(estacion.nombre);
+        return this.getNombre().equalsIgnoreCase(((Estacion)o).getNombre());
     }
 }
