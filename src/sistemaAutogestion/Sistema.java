@@ -12,6 +12,13 @@ public class Sistema implements IObligatorio {
     private ListaNodos<Usuario> usuarios;
     private ListaNodos<String> tiposBicicleta;
 
+    public Sistema() {
+        bicicletas = new ListaNodos<Bicicleta>();
+        estaciones = new ListaNodos<Estacion>();
+        usuarios = new ListaNodos<Usuario>();
+        tiposBicicleta = new ListaNodos<String>();
+    }
+
     @Override
     public Retorno crearSistemaDeGestion() {
         bicicletas = new ListaNodos<Bicicleta>();
