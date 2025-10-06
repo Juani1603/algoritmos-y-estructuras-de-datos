@@ -12,6 +12,10 @@ public class Sistema implements IObligatorio {
     private ListaNodos<Usuario> usuarios;
     private ListaNodos<String> tiposBicicleta;
 
+    public ListaNodos<Bicicleta> getBicicletas() {
+        return bicicletas;
+    }
+
     public Sistema() {
         bicicletas = new ListaNodos<Bicicleta>();
         estaciones = new ListaNodos<Estacion>();
@@ -249,7 +253,68 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno informaciónMapa(String[][] mapa) {
-        return Retorno.noImplementada();
+        int maxEstacionesFila = 0;
+
+        for (int i = 0; i < mapa.length; i++) {
+            int cantEstacionesFila = 0;
+            for (int j = 0; j < mapa[i].length; j++) {
+                if (mapa[i][j] != "0") {
+                    cantEstacionesFila++;
+                }
+            }
+            if (cantEstacionesFila > maxEstacionesFila) {
+                maxEstacionesFila = cantEstacionesFila;
+            }
+        }
+
+        int maxEstacionesColumna = 0;
+        int estacionesColumnaAnterior = 0;
+        int estacionesConsecutivas = 0;
+        boolean existenConsecutivas = false;
+
+        for (int j = 0; j < mapa[0].length; j++) {
+            int cantEstacionesColumna = 0;
+            for (int i = 0; i < mapa.length; i++) {
+                if (mapa[i][j] != "0") {
+                    cantEstacionesColumna++;
+                }
+            }
+
+            if (cantEstacionesColumna > maxEstacionesColumna) {
+                maxEstacionesColumna = cantEstacionesColumna;
+            }
+
+            if (cantEstacionesColumna > estacionesColumnaAnterior && !existenConsecutivas) {
+                estacionesConsecutivas++;
+            } else {
+                estacionesConsecutivas = 0;
+            }
+
+            if (estacionesConsecutivas >= 3) {
+                existenConsecutivas = true;
+            }
+
+            estacionesColumnaAnterior = cantEstacionesColumna;
+        }
+
+        String mensaje = "";
+
+        if (maxEstacionesFila > maxEstacionesColumna) {
+            mensaje += maxEstacionesFila + "#fila";
+        } else if (maxEstacionesFila < maxEstacionesColumna) {
+            mensaje += maxEstacionesColumna + "#columna";
+        } else {
+            mensaje += maxEstacionesFila + "#ambas";
+        }
+
+        if (existenConsecutivas) {
+            mensaje += "|existe";
+        } else {
+            mensaje += "|no existe";
+        }
+
+        Retorno retorno = new Retorno(Retorno.Resultado.OK, mensaje);
+        return retorno;
     }
 
     @Override

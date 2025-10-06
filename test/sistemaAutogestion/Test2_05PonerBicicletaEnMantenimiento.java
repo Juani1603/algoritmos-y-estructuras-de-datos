@@ -28,7 +28,7 @@ public class Test2_05PonerBicicletaEnMantenimiento {
     public void marcarEnMantenimientoError01() {
         retorno = s.marcarEnMantenimiento("", "Motivo cualquiera");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
-        
+
         retorno = s.marcarEnMantenimiento("   ", "Motivo cualquiera");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
@@ -53,18 +53,23 @@ public class Test2_05PonerBicicletaEnMantenimiento {
 
     @Test
     public void marcarEnMantenimientoError03() {
-        
-        
-        retorno = s.marcarEnMantenimiento("DEF456", "Fallo");
+        Bicicleta aux = new Bicicleta("ABC123");
+        Bicicleta bicicletaBuscada = ((Sistema) s).getBicicletas().obtenerPorObj(aux);
+
+        bicicletaBuscada.SetEstado(Bicicleta.Estado.ALQUILADA);
+
+        retorno = s.marcarEnMantenimiento("ABC123", "Fallo");
         assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
     }
 
     @Test
     public void marcarEnMantenimientoError04() {
-        Bicicleta aux = new Bicicleta("GHI789");
-        aux.SetEstado(Bicicleta.Estado.MANTENIMIENTO);
-        
-        retorno = s.marcarEnMantenimiento("GHI789", "Revisión");
+        Bicicleta aux = new Bicicleta("ABC123");
+        Bicicleta bicicletaBuscada = ((Sistema) s).getBicicletas().obtenerPorObj(aux);
+
+        bicicletaBuscada.SetEstado(Bicicleta.Estado.MANTENIMIENTO);
+
+        retorno = s.marcarEnMantenimiento("ABC123", "Revisión");
         assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado());
     }
 }
