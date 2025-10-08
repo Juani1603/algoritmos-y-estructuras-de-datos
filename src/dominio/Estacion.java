@@ -7,7 +7,10 @@ public class Estacion implements Comparable<Estacion>{
     private String nombre;
     private String barrio;
     private int capacidad;
-    ListaNodos<Anclaje> anclajes;
+    ListaNodos<Bicicleta> bicicletas;
+    ListaNodos<Bicicleta> colaDeAnclaje;
+    ListaNodos<Usuario> usuariosEnEspera;
+    ListaNodos<Usuario> usuariosYaAlquilaron;
 
     public Estacion(String nombre, String barrio, int capacidad) {
         this.nombre = nombre;
@@ -44,13 +47,15 @@ public class Estacion implements Comparable<Estacion>{
         this.capacidad = capacidad;
     }
 
-    public ListaNodos<Anclaje> getAnclajes() {
-        return anclajes;
+    public ListaNodos<Bicicleta> getBicicletas() {
+        return bicicletas;
     }
 
-    public void setAnclajes(ListaNodos<Anclaje> anclajes) {
-        this.anclajes = anclajes;
+    public void setBicicletas(ListaNodos<Bicicleta> bicicletas) {
+        this.bicicletas = bicicletas;
     }
+
+  
 
     @Override
     public boolean equals(Object o) {

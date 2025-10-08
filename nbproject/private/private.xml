@@ -5,11 +5,11 @@
         <group>
             <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/src/sistemaAutogestion/Sistema.java</file>
             <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/src/tads/ListaNodos.java</file>
-            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/src/sistemaAutogestion/IObligatorio.java</file>
-            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/test/sistemaAutogestion/Test2_06RepararBicicleta.java</file>
-            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/test/sistemaAutogestion/Test3_01ObtenerUsuario.java</file>
-            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/test/sistemaAutogestion/Test3_03ListarBicisEnDeposito.java</file>
-            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/test/sistemaAutogestion/Test3_04MapaDeEstaciones.java</file>
+            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/src/dominio/Usuario.java</file>
+            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/src/dominio/Estacion.java</file>
+            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/test/sistemaAutogestion/Test2_04RegistrarBicicleta.java</file>
+            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/test/sistemaAutogestion/Test2_05PonerBicicletaEnMantenimiento.java</file>
+            <file>file:/C:/Users/Administrador/Desktop/Obligatorio-AED/algoritmos-y-estructuras-de-datos/test/sistemaAutogestion/Test3_02ListarUsuarios.java</file>
         </group>
     </open-files>
 </project-private>

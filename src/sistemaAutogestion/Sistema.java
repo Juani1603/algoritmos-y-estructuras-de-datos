@@ -7,17 +7,17 @@ import dominio.*;
 
 public class Sistema implements IObligatorio {
 
-    private ListaNodos<Bicicleta> bicicletas;
+    private ListaNodos<Bicicleta> bicicletasEnDeposito;
     private ListaNodos<Estacion> estaciones;
     private ListaNodos<Usuario> usuarios;
     private ListaNodos<String> tiposBicicleta;
 
     public ListaNodos<Bicicleta> getBicicletas() {
-        return bicicletas;
+        return bicicletasEnDeposito;
     }
 
     public Sistema() {
-        bicicletas = new ListaNodos<Bicicleta>();
+        bicicletasEnDeposito = new ListaNodos<Bicicleta>();
         estaciones = new ListaNodos<Estacion>();
         usuarios = new ListaNodos<Usuario>();
         tiposBicicleta = new ListaNodos<String>();
@@ -25,7 +25,7 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno crearSistemaDeGestion() {
-        bicicletas = new ListaNodos<Bicicleta>();
+        bicicletasEnDeposito = new ListaNodos<Bicicleta>();
         estaciones = new ListaNodos<Estacion>();
         usuarios = new ListaNodos<Usuario>();
         tiposBicicleta = new ListaNodos<String>();
@@ -107,12 +107,12 @@ public class Sistema implements IObligatorio {
         }
 
         Bicicleta bicicletaBuscada = new Bicicleta(codigo);
-        if (bicicletas.existeElemento(bicicletaBuscada)) {
+        if (bicicletasEnDeposito.existeElemento(bicicletaBuscada)) {
             return Retorno.error4();
         }
 
         Bicicleta bicicletaNueva = new Bicicleta(codigo, tipo);
-        bicicletas.agregarFinal(bicicletaNueva);
+        bicicletasEnDeposito.agregarFinal(bicicletaNueva);
 
         return Retorno.ok();
     }
@@ -128,7 +128,7 @@ public class Sistema implements IObligatorio {
         }
 
         Bicicleta aux = new Bicicleta(codigo);
-        Bicicleta bicicletaBuscada = bicicletas.obtenerPorObj(aux);
+        Bicicleta bicicletaBuscada = bicicletasEnDeposito.obtenerPorObj(aux);
 
         if (bicicletaBuscada == null) {
             return Retorno.error2();
@@ -153,7 +153,7 @@ public class Sistema implements IObligatorio {
         }
 
         Bicicleta aux = new Bicicleta(codigo);
-        Bicicleta bicicletaBuscada = bicicletas.obtenerPorObj(aux);
+        Bicicleta bicicletaBuscada = bicicletasEnDeposito.obtenerPorObj(aux);
 
         if (bicicletaBuscada == null) {
             return Retorno.error2();
@@ -237,11 +237,11 @@ public class Sistema implements IObligatorio {
     public Retorno listarBicisEnDeposito() {
         String mensaje = "";
 
-        for (int i = 0; i < bicicletas.cantElementos(); i++) {
-            Bicicleta b = bicicletas.obtenerPorPos(i);
+        for (int i = 0; i < bicicletasEnDeposito.cantElementos(); i++) {
+            Bicicleta b = bicicletasEnDeposito.obtenerPorPos(i);
             if (b.getEstado() != Bicicleta.Estado.ALQUILADA) {
                 mensaje += b.getCodigo() + "#" + b.getTipo() + "#" + b.getEstado();
-                if (i != bicicletas.cantElementos() - 1) {
+                if (i != bicicletasEnDeposito.cantElementos() - 1) {
                     mensaje += "|";
                 }
             }
